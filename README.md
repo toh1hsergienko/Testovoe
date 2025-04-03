@@ -28,7 +28,7 @@
 
 ## **Код и реализация**  
 
-
+#### Задание № 1 - Работа с базой данных
 ```
 import pandas as pd
 import numpy as np
@@ -49,6 +49,7 @@ print(database)
 print(middle_and_dismiss)
 
 ```
+#### Задание № 2 - Параметры для линейной функции
 ```
 from scipy.optimize import curve_fit
 import numpy as np
@@ -65,9 +66,13 @@ mas, mat= curve_fit(linear,x,y)
 a,b = mas
 x_os = np.linspace(min(x), max(x), 6) 
 y_os = linear(x_os, a, b)
-
+```
+##### средняя квадратичная ошибка
+```
 mse = np.mean((y_os - y)**2)
-
+```
+##### вывод
+```
 print(mse)
 plt.scatter(x, y) 
 plt.plot(x_os, y_os)
@@ -76,6 +81,7 @@ plt.ylabel('y')
 plt.grid(True)
 plt.show()
 ```
+#### Задание № 3 - Классификация цифр
 ```
 import tensorflow as tf
 from tensorflow import keras
@@ -85,9 +91,13 @@ import numpy as np
 from tensorflow.keras import layers
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-
+```
+##### Загрузка датасета
+```
 (x_train, y_train),(x_test, y_test) = keras.datasets.mnist.load_data()
+```
 
+```
 x = np.concatenate([x_train, x_test])
 y = np.concatenate([y_train, y_test])
 
@@ -99,8 +109,9 @@ x = x.astype("float32") / 255
 x = x.reshape(-1, 28*28)
 
 x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=42)
-
-
+```
+##### Архитектура модели
+```
 model = keras.Sequential([layers.Dense(4, activation='linear', input_shape=(784,)),
                          layers.Dense(8, activation='relu'),
                          layers.Dense(3, activation='softmax')])
@@ -108,6 +119,9 @@ model = keras.Sequential([layers.Dense(4, activation='linear', input_shape=(784,
 model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
 history = model.fit(x_train, y_train, epochs=25, batch_size=32, validation_data=(x_test, y_test))
+```
+##### Вывод результата и графика
+```
 
 plt.figure(figsize=(12,5))
 
